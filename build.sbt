@@ -12,17 +12,20 @@ lazy val root = project.in(file(".")).
   aggregate(nanoidJS, nanoidJVM).
   settings(
     publish := {},
-    publishLocal := {},
+    publishLocal := {}
   )
 
 lazy val nanoid = crossProject.in(file(".")).
   settings(sharedSettings).
   jvmSettings(
-    libraryDependencies += scalactic,
-    libraryDependencies += scalaTest % Test
+    // Add JVM-specific settings here
+    libraryDependencies += "org.scalactic" %%% "scalactic" % scalactic,
+    libraryDependencies += "org.scalatest" %%% "scalatest" % scalatest % Test
   ).
   jsSettings(
     // Add JS-specific settings here
+    libraryDependencies += "org.scalactic" %%% "scalactic" % scalactic,
+    libraryDependencies += "org.scalatest" %%% "scalatest" % scalatest % Test
   )
 
 lazy val nanoidJVM = nanoid.jvm
