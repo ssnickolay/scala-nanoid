@@ -10,8 +10,11 @@ object NanoIdUtils {
 
   lazy val DefaultSize = 21
 
-  def defaultGenerate: String =
+  def generate: String =
     generate(DefaultNumberGenerator, DefaultAlphabet, DefaultSize)
+
+  def generate(size: Int): String =
+    generate(DefaultNumberGenerator, DefaultAlphabet, size)
 
   def generate(random: Random, alphabet: Array[Char], size: Int): String = {
     val mask: Int = (2 << Math.floor(Math.log(alphabet.length - 1) / Math.log(2)).asInstanceOf[Int]) - 1
