@@ -1,7 +1,5 @@
 package com.ssnickolay.nanoid
 
-import scala.collection.mutable.Stack
-
 class NanoIdUtilsSpec extends UnitSpec {
 
   "A NanoIdUtils" should "generate some value" in {
@@ -11,11 +9,11 @@ class NanoIdUtilsSpec extends UnitSpec {
   }
 
   it should "generate 100k random and uniq IDs" in {
-    var ids = new Stack[String]
-
-    1.to(100000).foreach( _ =>
-      ids = ids.push(NanoIdUtils.generate)
-    )
+    var ids =
+      Stream
+        .continually(NanoIdUtils.generate)
+        .take(100000)
+        .toList
 
     assert(ids.distinct.length === 100000)
   }
