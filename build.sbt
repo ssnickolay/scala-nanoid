@@ -24,6 +24,7 @@ lazy val nanoid = crossProject.in(file(".")).
   ).
   jsSettings(
     // Add JS-specific settings here
+    scalacOptions += "-P:scalajs:sjsDefinedByDefault",
     libraryDependencies += "org.scalactic" %%% "scalactic" % scalactic,
     libraryDependencies += "org.scalatest" %%% "scalatest" % scalatest % Test
   )

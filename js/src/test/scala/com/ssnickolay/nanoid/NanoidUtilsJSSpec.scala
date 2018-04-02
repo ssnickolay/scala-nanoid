@@ -3,7 +3,6 @@ package com.ssnickolay.nanoid
 import scala.scalajs.js
 import scala.scalajs.js.annotation._
 
-@ScalaJSDefined
 object FakeRandom extends js.Object {
   def build(size: Int): Array[Int] =
     1.to(size).map(_ => 123).toArray
