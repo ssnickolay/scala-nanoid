@@ -4,15 +4,19 @@ import scala.scalajs.js
 import scala.scalajs.js.annotation._
 
 object FakeRandom extends js.Object {
-  def build(size: Int): Array[Int] =
-    1.to(size).map(_ => 123).toArray
+  def build(size: Int): js.Array[Int] = {
+    var array = new js.Array[Int]()
+
+    1.to(size).foreach(_ => array.unshift(123))
+    array
+  }
 }
 
 class NanoIdUtilsJSSpec extends UnitSpec {
   it should "generate with seeded JS Random" in {
-    var alphabet = NanoIdUtils.DefaultAlphabet
+    var alphabet = "_~0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"//NanoIdUtils.DefaultAlphabet
     var size = 21
 
-    assert(NanoIdUtils.generate((i) => FakeRandom.build(i), alphabet, size) === "VVVVVVVVVVVVVVVVVVVVV")
+    assert(NanoIdUtils.generate(FakeRandom.build _, alphabet, size) === "VVVVVVVVVVVVVVVVVVVVV")
   }
 }
