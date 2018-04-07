@@ -14,9 +14,9 @@ object FakeRandom extends js.Object {
 
 class NanoIdJSSpec extends UnitSpec {
   it should "generate with seeded JS Random" in {
-    var alphabet = "_~0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"//NanoIdUtils.DefaultAlphabet
+    var alphabet = NanoId.Alphabet
     var size = 21
 
-    assert(NanoIdBase.generate(FakeRandom.build _, alphabet, size) === "VVVVVVVVVVVVVVVVVVVVV")
+    assert(NanoId.generateNative(FakeRandom.build _, alphabet, size) === "VVVVVVVVVVVVVVVVVVVVV")
   }
 }

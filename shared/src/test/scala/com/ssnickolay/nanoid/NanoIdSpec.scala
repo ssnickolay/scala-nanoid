@@ -2,7 +2,7 @@ package com.ssnickolay.nanoid
 
 class NanoIdBaseSpec extends UnitSpec {
 
-  "A NanoIdBase" should "generate some value" in {
+  "A NanoId" should "generate some value" in {
     val value = NanoId.generate
 
     assert(value.isInstanceOf[String])
