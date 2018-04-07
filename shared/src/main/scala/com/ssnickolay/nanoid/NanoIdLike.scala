@@ -20,25 +20,11 @@ trait NanoIdLike {
   def generate(random: Random, alphabet: Array[Char], size: Int): String = {
     val mask: Int = (2 << Math.floor(Math.log(alphabet.length - 1) / Math.log(2)).asInstanceOf[Int]) - 1
     val step: Int = Math.ceil(1.6 * mask * size / alphabet.length).asInstanceOf[Int]
-    val builder = new StringBuilder()
-    var result: String = ""
+    var bytes: Array[Byte] = new Array[Byte](step)
+    random.nextBytes(bytes)
 
-    while (result == "") {
-      var bytes: Array[Byte] = new Array[Byte](step)
-      random.nextBytes(bytes)
-
-      for (i <- 0 until step) {
-        val alphabetIndex: Int = bytes(i) & mask
-
-        if (alphabetIndex < alphabet.length) {
-          builder.append(alphabet(alphabetIndex))
-          if (builder.length() == size) {
-            result = builder.toString()
-          }
-        }
-      }
-    }
-
-    result
+    0.to(step - 1).flatMap(i =>
+      alphabet.lift(bytes(i) & mask)
+    ).slice(0, size).mkString("")
   }
 }
