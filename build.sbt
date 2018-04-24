@@ -6,6 +6,32 @@ val sharedSettings = Seq(
   name := "scala-nanoid",
   version := "0.1-SNAPSHOT",
   scalaVersion := "2.12.3",
+  organization := "com.github.ssnickolay",
+  publishMavenStyle := true,
+  credentials += Credentials(Path.userHome / ".ivy2" / ".credentials"),
+  publishTo := {
+    val nexus = "https://oss.sonatype.org/"
+    if (isSnapshot.value)
+      Some("snapshots" at nexus + "content/repositories/snapshots")
+    else
+      Some("releases" at nexus + "service/local/staging/deploy/maven2")
+  },
+  pomIncludeRepository := { _ => false },
+  licenses := Seq("BSD-style" -> url("http://www.opensource.org/licenses/bsd-license.php")),
+  scmInfo := Some(
+    ScmInfo(
+      url("https://github.com/ssnickolay"),
+      "scm:git@github.com:ssnickolay/scala-nanoid.git"
+    )
+  ),
+  developers := List(
+    Developer(
+      id    = "ssnickolay",
+      name  = "Sverchkov Nikolay",
+      email = "ssnickolay@gmail.com",
+      url   = url("https://github.com/ssnickolay")
+    )
+  )
 )
 
 lazy val root = project.in(file(".")).
