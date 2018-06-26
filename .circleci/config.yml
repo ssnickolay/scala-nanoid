@@ -1,42 +1,45 @@
-# Scala CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/sample-config/ for more details
-#
 version: 2
 
+workflows:
+  version: 2
+  test:
+    jobs:
+      - test-2.10.7
+      - test-2.11.12
+      - test-2.12.6
 jobs:
-  build:
+  test-2.10.7: &test-template
     docker:
       # specify the version you desire here
       - image: webpackcontrib/circleci-jdk9-node8
 
-    working_directory: ~/repo
-
-    environment:
+    environment: &test-env
       # Customize the JVM maximum heap limit
       JVM_OPTS: -Xmx3200m
       TERM: dumb
-    
+      SBT_VERSION: 1.0.0
+      SCALA_VERSION: 2.10.7
+
+    working_directory: ~/repo
     steps:
       - checkout
 
-      # Install sbt
-      - run: wget -q https://dl.bintray.com/sbt/debian/sbt-0.13.12.deb
-      - run: sudo dpkg -i sbt-0.13.12.deb
+      - run:
+          name: Compile & Test
+          command: |
+                    wget -q https://dl.bintray.com/sbt/debian/sbt-$SBT_VERSION.deb
+                    sudo dpkg -i sbt-$SBT_VERSION.deb
+                    cat /dev/null | sbt ++$SCALA_VERSION test:compile
+                    cat /dev/null | sbt ++$SCALA_VERSION test:test
 
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "build.sbt" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+  test-2.11.12:
+    <<: *test-template
+    environment:
+      <<: *test-env
+      SCALA_VERSION: 2.11.12
 
-      - run: cat /dev/null | sbt test:compile
-
-      - save_cache:
-          paths:
-            - ~/.m2
-          key: v1-dependencies--{{ checksum "build.sbt" }}
-
-      # run tests!
-      - run: cat /dev/null | sbt test:test
+  test-2.12.6:
+    <<: *test-template
+    environment:
+      <<: *test-env
+      SCALA_VERSION: 2.12.6
