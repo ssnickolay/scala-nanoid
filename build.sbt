@@ -9,6 +9,7 @@ val sharedSettings = Seq(
   organization := "com.github.ssnickolay",
   publishMavenStyle := true,
   credentials += Credentials(Path.userHome / ".ivy2" / ".credentials"),
+  crossScalaVersions := Seq("2.10.7", "2.11.12", "2.12.6"),
   publishTo := {
     val nexus = "https://oss.sonatype.org/"
     if (isSnapshot.value)
