@@ -9,7 +9,27 @@ Scala port of NanoID ([https://github.com/ai/nanoid](https://github.com/ai/nanoi
 
 **Compact.** It uses a larger alphabet than UUID (A-Za-z0-9_~) and has a similar number of unique IDs in just 21 symbols instead of 36.
 
-# Publish to sonatype
+### Getting Started
+
+Scala-NanoId is currently available for Scala 2.10, 2.11 and 2.12, and [Scala.js](http://www.scala-js.org/).
+
+Include the following in your sbt file:
+
+```sh
+// For Scala.js
+libraryDependencies += "com.github.ssnickolay" %%% "scala-nanoid" % "0.1.0"
+
+// For Scala.jvm
+libraryDependencies += "com.github.ssnickolay" %% "scala-nanoid" % "0.1.0"
+```
+
+### Usage
+
+```
+$ 
+```
+
+# Publish to Sonatype
 
 ```sh
 $ sbt +publish
